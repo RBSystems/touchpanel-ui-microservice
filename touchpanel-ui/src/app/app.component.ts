@@ -32,7 +32,7 @@ import { ModalComponent } from './modal.component';
     ]),
     trigger('inputIcon', [
       transition('void => *', [
-        animate('.2s', style({ fontSize: '27vh'})) 
+        animate('.2s', style({ fontSize: '17vh'})) 
       ]),
       transition('* => void', [
         animate('.2s', style({ fontSize: '0vh'})) 
@@ -99,7 +99,7 @@ export class AppComponent { // event stuff
 	this.helprequested = false;
 	
 	// uncomment for local testing
-//    this.showing = true;
+    this.showing = true;
 
     // setup socket to recieve events
     this.socket.getEventListener().subscribe(event => {
