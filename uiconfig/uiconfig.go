@@ -17,23 +17,22 @@ const UI_CONFIG_FILE = "ui-config.json"
 type UIConfig struct {
 	Api                []string             `json:"api"`
 	Panels             []Panel              `json:"panels"`
-	Presets            []Preset             `json:"presets"`
+	Displays           []Display            `json:"displays"`
 	InputConfiguration []InputConfiguration `json:"inputConfiguration"`
 	RoomWideAudios     []string             `json:"roomWideAudios"`
 }
 
-type Preset struct {
-	Name         string   `json:"name"`
-	Icon         string   `json:"icon"`
-	Displays     []string `json:"displays"`
-	AudioDevices []string `json:"audioDevices"`
-	Inputs       []string `json:"inputs"`
+type Display struct {
+	Name         string `json:"name"`
+	Icon         string `json:"icon"`
+	Inputs       string `json:"inputs"`
+	AudioDevices string `json:"audioDevices"`
 }
 
 type Panel struct {
 	Hostname                string   `json:"hostname"`
 	UIPath                  string   `json:"uipath"`
-	Presets                 []string `json:"presets"`
+	Displays                []string `json:"displays"`
 	Features                []string `json:"features"`
 	IndependentAudioDevices []string `json:"indpendentAudioDevices"`
 }

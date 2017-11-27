@@ -267,7 +267,7 @@ export class HomeComponent implements OnInit {
         let ret: EventEmitter<boolean> = new EventEmitter();
 
         this.wheel.preset = this.oldPreset;
-        this.wheel.unDisplayToAll(this.oldDisplayData, this.oldAudioDevicesData).subscribe(
+        this.wheel.unDisplayToAll(this.data.presets).subscribe(
             success => {
                 if (success) {
                     ret.emit(true);

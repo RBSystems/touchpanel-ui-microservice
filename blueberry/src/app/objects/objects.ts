@@ -29,33 +29,33 @@ export class RoomStatus {
 }
 
 export class UIConfiguration {
+    api: string[];
+
+    @Type(() => DisplayConfiguration)
+    displays: DisplayConfiguration[];
+
     @Type(() => PanelConfiguration)
     panels: PanelConfiguration[];
-
-    @Type(() => PresetConfiguration)
-    presets: PresetConfiguration[];
 
     @Type(() => InputConfiguration)
     inputConfiguration: InputConfiguration[];
 
-    Api: string[];
     roomWideAudios: string[];
 }
 
 export class PanelConfiguration {
     hostname: string;
     uipath: string;
+    displays: string[];
     features: string[];
-    presets: string[];
     independentAudioDevices: string[];
 }
 
-export class PresetConfiguration {
+export class DisplayConfiguration {
     name: string;
     icon: string;
-    displays: string[];
-    audioDevices: string[];
     inputs: string[];
+    audioDevices: string[];
 }
 
 export class InputConfiguration {
@@ -96,44 +96,19 @@ export class DeviceConfiguration {
 	}
 }
 
-export class Preset {
-    name: string;
-    icon: string;
-
-    displays: Display[] = [];
-    audioDevices: AudioDevice[] = [];
-    inputs: Input[] = [];
-    extraInputs: Input[] = [];
-
-    top: string;
-    right: string;
-
-    constructor(name: string, icon: string, displays: Display[], audioDevices: AudioDevice[], inputs: Input[]) {
-        this.name = name;
-        this.icon = icon;
-        this.displays = displays;
-        this.audioDevices = audioDevices;
-        this.inputs = inputs;
-    }
-
-    public static filterPresets(names: string[], presets: Preset[]): Preset[] {
-        return presets.filter(p => names.includes(p.name));
-    }
-}
-
 export class Panel {
     hostname: string;
     uipath: string;
-    presets: Preset[] = [];
+    displays: Display[] = [];
     features: string[] = [];
     independentAudioDevices: AudioDevice[] = [];
 
     render: boolean = false;
 
-    constructor(hostname: string, uipath: string, presets: Preset[], features: string[], independentAudioDevices: AudioDevice[]) {
+    constructor(hostname: string, uipath: string, displays: Display[], features: string[], independentAudioDevices: AudioDevice[]) {
         this.hostname = hostname;
         this.uipath = uipath;
-        this.presets = presets;
+        this.displays = displays;
         this.features = features;
         this.independentAudioDevices = independentAudioDevices;
     }

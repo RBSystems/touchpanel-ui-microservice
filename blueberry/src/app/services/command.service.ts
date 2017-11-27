@@ -258,36 +258,35 @@ export class CommandService {
         return ret;
     }
 
-    public unDisplayToAll(oldDisplays: Display[], oldAudioDevices: AudioDevice[]): EventEmitter<boolean> {
+    public unDisplayToAll(presets: Preset[]): EventEmitter<boolean> {
         let ret: EventEmitter<boolean> = new EventEmitter<boolean>();
-        console.log("un displaying-to-all to displays", oldDisplays);
         let body = { displays: [], audioDevices: [] }; 
 
-        for (let d of oldDisplays) {
-            if (d.name == null || d.power == null || d.blanked == null || d.input == null) {
-                continue; 
+        for (let p of presets) {
+            for (let d of p.displays) {
+                console.log("searching if d is already in displays", d, body.displays);
+                if (!body.displays.some(d => d.name == d.name)) {
+                    console.log("it isn't!");
+                    body.displays.push({
+                        "name": d.name,
+                        "power": "on",
+                        "blanked": false,
+                        "input": p.inputs[0].name
+                    });
+                }
             }
 
-            body.displays.push({
-                "name": d.name,
-                "power": d.power,
-                "blanked": d.blanked,
-                "input": d.input.name
-            }); 
-        }
-
-        for (let a of oldAudioDevices) {
-            if (a.name == null || a.power == null || a.muted == null || a.volume == null) {
-                continue; 
+            for (let a of p.audioDevices) {
+                body.audioDevices.push({
+                    "name": a.name,
+                    "power": "on",
+                    "muted": true,
+                    "volume": 30
+                });
             }
-
-            body.audioDevices.push({
-                "name": a.name,
-                "power": a.power,
-                "muted": a.muted,
-                "volume": a.volume,
-            });
         }
+
+        console.log("un-displaying to all, using body:", body);
 
 		this.putWithCustomTimeout(body, 10*1000).subscribe(
 			data => {
